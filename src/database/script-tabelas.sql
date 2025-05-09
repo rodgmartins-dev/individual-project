@@ -6,59 +6,108 @@
 comandos para mysql server
 */
 
-CREATE DATABASE aquatech;
-
-USE aquatech;
-
-CREATE TABLE empresa (
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	razao_social VARCHAR(50),
-	cnpj CHAR(14),
-	codigo_ativacao VARCHAR(50)
-);
+CREATE DATABASE projeto;
+USE projeto;
 
 CREATE TABLE usuario (
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	nome VARCHAR(50),
-	email VARCHAR(50),
-	senha VARCHAR(50),
-	fk_empresa INT,
-	FOREIGN KEY (fk_empresa) REFERENCES empresa(id)
+id INT PRIMARY KEY AUTO_INCREMENT,
+nome VARCHAR(100),
+email VARCHAR(45),
+senha VARCHAR(45),
+cep CHAR(8),
+complemento VARCHAR(45)
+)AUTO_INCREMENT = 100;
+
+CREATE TABLE exercicio (
+id INT PRIMARY KEY AUTO_INCREMENT,
+nome VARCHAR(45),
+tipo VARCHAR(45)
 );
 
-ALTER TABLE usuario ADD COLUMN cpf CHAR(14);
-
-CREATE TABLE aviso (
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	titulo VARCHAR(100),
-	descricao VARCHAR(150),
-	fk_usuario INT,
-	FOREIGN KEY (fk_usuario) REFERENCES usuario(id)
+CREATE TABLE personalrecord (
+id INT AUTO_INCREMENT,
+fk_usuario INT,
+CONSTRAINT fkpr_usuario FOREIGN KEY (fk_usuario)
+REFERENCES usuario(id),
+fk_exercicio INT,
+CONSTRAINT fkpr_exercicio FOREIGN KEY (fk_exercicio)
+REFERENCES exercicio(id),
+data_dia date,
+valor FLOAT,
+CONSTRAINT pk_personalrecord PRIMARY KEY (id, fk_usuario, fk_exercicio)
 );
 
-create table aquario (
-/* em nossa regra de negócio, um aquario tem apenas um sensor */
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	descricao VARCHAR(300),
-	fk_empresa INT,
-	FOREIGN KEY (fk_empresa) REFERENCES empresa(id)
-);
+INSERT INTO exercicio (tipo, nome) VALUES
+-- Barbell
+('Barbell', 'Back squat'),
+('Barbell', 'Bent over row'),
+('Barbell', 'bench press'),
+('Barbell', 'Clean'),
+('Barbell', 'clean & jerk'),
+('Barbell', 'clean pull'),
+('Barbell', 'cluster'),
+('Barbell', 'Deadlift'),
+('Barbell', 'Front squat'),
+('Barbell', 'Hang power clean'),
+('Barbell', 'Hang power snatch'),
+('Barbell', 'Hang squat clean'),
+('Barbell', 'Hang power snatch'),
+('Barbell', 'Muscle clean'),
+('Barbell', 'Muscle Snatch'),
+('Barbell', 'Overhead Lunge'),
+('Barbell', 'Overhead squat'),
+('Barbell', 'Power clean'),
+('Barbell', 'Push jerk'),
+('Barbell', 'Shoulder press'),
+('Barbell', 'Snatch'),
+('Barbell', 'Snatch balance'),
+('Barbell', 'Snatch deadlift'),
+('Barbell', 'Snatch pull'),
+('Barbell', 'Split jerk'),
+('Barbell', 'Squat clean'),
+('Barbell', 'Squat jerk'),
+('Barbell', 'Squat Snatch'),
+('Barbell', 'Sumo deadlift'),
+('Barbell', 'Sumo deadlift high pull'),
+('Barbell', 'thruster'),
+-- Endurance
+('Endurance', 'AirBike (100cal)'),
+('Endurance', 'AirBike (50cal)'),
+('Endurance', 'AirBike (max cal 1\')'),
+('Endurance', 'Row 100m'),
+('Endurance', 'Row 200m'),
+('Endurance', 'Row 500m'),
+('Endurance', 'Row 1km'),
+('Endurance', 'Row 2km'),
+('Endurance', 'Row 5km'),
+('Endurance', 'Row 10km'),
+('Endurance', 'Row 21km'),
+('Endurance', 'Run 100m'),
+('Endurance', 'Run 200m'),
+('Endurance', 'Run 300m'),
+('Endurance', 'Run 500m'),
+('Endurance', 'Run 1km'),
+('Endurance', 'Run 1.6km'),
+('Endurance', 'Run 3km'),
+('Endurance', 'Run 5km'),
+('Endurance', 'Run 10km'),
+('Endurance', 'Run 15km'),
+-- Gymnastic
+('Gymnastic', 'Bar Muscle-Ups (max reps 1\')'),
+('Gymnastic', 'Bar Muscle-Ups (max unbroken)'),
+('Gymnastic', 'Chest-to-bar (max unbroken)'),
+('Gymnastic', 'Double-Under unbroken'),
+('Gymnastic', 'Handstand push-ups (max reps 1\')'),
+('Gymnastic', 'Handstand push-ups (max unbroken)'),
+('Gymnastic', 'Handstand walk (max distance)'),
+('Gymnastic', 'Muscle-ups (max unbroken)'),
+('Gymnastic', 'Pull-up (max weight)'),
+('Gymnastic', 'Pull-up (max unbroken)'),
+('Gymnastic', 'Push-up (max unbroken)'),
+('Gymnastic', 'Strict Handstand push-ups'),
+('Gymnastic', 'Strict Pull-ups'),
+('Gymnastic', 'Strict Toes-to-bar'),
+('Gymnastic', 'Toes-to-bar');
 
-/* esta tabela deve estar de acordo com o que está em INSERT de sua API do arduino - dat-acqu-ino */
-
-create table medida (
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	dht11_umidade DECIMAL,
-	dht11_temperatura DECIMAL,
-	luminosidade DECIMAL,
-	lm35_temperatura DECIMAL,
-	chave TINYINT,
-	momento DATETIME,
-	fk_aquario INT,
-	FOREIGN KEY (fk_aquario) REFERENCES aquario(id)
-);
-
-insert into empresa (razao_social, codigo_ativacao) values ('Empresa 1', 'ED145B');
-insert into empresa (razao_social, codigo_ativacao) values ('Empresa 2', 'A1B2C3');
-insert into aquario (descricao, fk_empresa) values ('Aquário de Estrela-do-mar', 1);
-insert into aquario (descricao, fk_empresa) values ('Aquário de Peixe-dourado', 2);
+SELECT * FROM exercicio;
+SELECT * FROM usuario;
