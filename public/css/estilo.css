@@ -326,13 +326,24 @@ input {
 /* SIMULADOR */
 
 .simulador {
-  color: white;
+  /* background-color: #8E1616; */
+  height: var(--tamanho-login);
 }
 
 .simulador .container {
-  flex-direction: column;
-  overflow: scroll;
-  height: var(--tamanho-simulador);
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.interesse {
+  display: block;
+  justify-content: center;
+  text-align: center;
+}
+
+input[type=number]::-webkit-inner-spin-button {
+  appearance: none;
 }
 
 /* ALERTA */

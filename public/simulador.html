@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>AquaTech | Simulador</title>
+    <title>Crossfit | Simulador</title>
 
     <script src="./js/sessao.js"></script>
 
@@ -20,7 +20,7 @@
     <!--header inicio-->
     <div class="header">
         <div class="container">
-            <h1 class="titulo">AquaTech</h1>
+            <img src="assets/imgs/Crossfit-removebg.png">
             <ul class="navbar">
                 <li>
                     <a href="./index.html">Inicial</a>
@@ -36,47 +36,103 @@
             </ul>
         </div>
     </div>
-
-
     <!-- simulador inicio -->
     <div class="simulador">
+        <div class="alerta_erro">
+            <div class="card_erro" id="cardErro">
+                <span id="mensagem_erro"></span>
+            </div>
+        </div>
+        <div class="div_video">
+            <video src="https://www.crossfit.com/wp-content/uploads/2022/10/27141232/16x9_Semifinal-Web-Hero_6MB.mp4"
+                autoplay loop muted></video>
+        </div>
         <div class="container">
-            <h2>Simulador</h2>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Accusantium tempora architecto sint fugit
-                dolorum? Ipsum laborum magnam similique labore, voluptate amet reprehenderit rem ab blanditiis quisquam
-                laboriosam eaque alias. Reiciendis. Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                Accusantium tempora architecto sint fugit dolorum? Ipsum laborum magnam similique labore, voluptate amet
-                reprehenderit rem ab blanditiis quisquam laboriosam eaque alias. Reiciendis.</p>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Accusantium tempora architecto sint fugit
-                dolorum? Ipsum laborum magnam similique labore, voluptate amet reprehenderit rem ab blanditiis quisquam
-                laboriosam eaque alias. Reiciendis. Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                Accusantium tempora architecto sint fugit dolorum? Ipsum laborum magnam similique labore, voluptate amet
-                reprehenderit rem ab blanditiis quisquam laboriosam eaque alias. Reiciendis.</p>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Accusantium tempora architecto sint fugit
-                dolorum? Ipsum laborum magnam similique labore, voluptate amet reprehenderit rem ab blanditiis quisquam
-                laboriosam eaque alias. Reiciendis. Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                Accusantium tempora architecto sint fugit dolorum? Ipsum laborum magnam similique labore, voluptate amet
-                reprehenderit rem ab blanditiis quisquam laboriosam eaque alias. Reiciendis.</p>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Accusantium tempora architecto sint fugit
-                dolorum? Ipsum laborum magnam similique labore, voluptate amet reprehenderit rem ab blanditiis quisquam
-                laboriosam eaque alias. Reiciendis. Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                Accusantium tempora architecto sint fugit dolorum? Ipsum laborum magnam similique labore, voluptate amet
-                reprehenderit rem ab blanditiis quisquam laboriosam eaque alias. Reiciendis.</p>
-
+            <div class="card ">
+                <h2>Calculadora de Performance</h2>
+                <div class="formulario">
+                    <div class="campo">
+                        <span>Digite seu peso atual:</span>
+                        <input type="number" id="input_peso" placeholder="Digite seu peso em kg: 70.0">
+                    </div>
+                    <div class="campo">
+                        <span>Digite sua altura atual:</span>
+                        <input type="number" id="input_altura" placeholder="Digite seu altura em metros: 1.70">
+                    </div>
+                    <div class="interesse">
+                        <legend>Qual o seu objetivo?</legend>
+                        <input type="checkbox" id="emagrecer" name="interesse" value="emagrecer" />
+                        <label for="emagrecer"> Emagrecer </label>
+                        <div>
+                            <input type="checkbox" id="ganharMassa" name="interesse" value="ganharMassa" />
+                            <label for="ganharMassa"> Ganhar massa </label>
+                        </div>
+                    </div>
+                    <button class="botao" id="btncalcular" onclick="calcular()">calcular</button>
+                    <dialog close id="results">
+                        <div style="background-color: blue; width: 100px; height: 100px;" id="div_modal"></div>
+                        <button id="cancel" type="reset">Cancel</button>
+                    </dialog>
+                </div>
+                <div id="div_aguardar" class="loading-div">
+                    <img src="./assets/circle-loading.gif" id="loading-gif">
+                </div>
+                <div id="div_erros_login"></div>
+            </div>
         </div>
     </div>
-    <!-- simulador fim -->
-
     <!--footer inicio-->
     <div class="footer">
         <div class="container">
-            <h4>Feito com amor por aluno &hearts; SPTech &copy; 2023</h4>
+            <h4>Projeto individual - Rodrigo Gobetti Martins em conjunto com SPTech © 2025</h4>
             <span class="version">v1.0.0</span>
         </div>
     </div>
     <!--footer fim-->
-
-
 </body>
 
 </html>
+
+<script>
+    var cancelButton = document.getElementById("cancel");
+    var resultsModal = document.getElementById("results");
+
+    cancelButton.addEventListener("click", function () {
+        results.close();
+    });
+
+    function calcular() {
+        var peso = Number(input_peso.value);
+        var altura = Number(input_altura.value);
+        var aguaDia = peso * 0.033;
+        var imc = peso / (altura * altura);
+        var checkEmagrecer = emagrecer.checked;
+        var checkGanharMassa = ganharMassa.checked;
+
+        if (!peso || !altura) {
+            alert("Preencha os campos corretamente.")
+            return;
+        }
+
+        if (checkEmagrecer && checkGanharMassa) {
+            alert("Selecione apenas uma das opções.")
+            return;
+        }
+
+        if (!checkEmagrecer && !checkGanharMassa) {
+            alert("Selecione uma opção de objetivo")
+            return;
+        }
+
+        var mensagem = "";
+        if (checkEmagrecer) {
+            mensagem = `Seu IMC é ${imc.toFixed(2)}. Você deseja emagrecer. Lembre-se: uma alimentação saudável e exercícios regulares são essenciais!`;
+        } else if (checkGanharMassa) {
+            mensagem = `Seu IMC é ${imc.toFixed(2)}. Você deseja ganhar massa muscular. Foque em treinos de força e dieta rica em proteínas!`;
+        }
+
+        div_modal.innerHTML = `<p style="color: white; padding: 10px;">${mensagem}</p>`;
+        resultsModal.showModal();
+
+    }
+</script>
