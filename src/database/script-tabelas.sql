@@ -5,7 +5,6 @@
 /*
 comandos para mysql server
 */
-
 CREATE DATABASE projeto;
 USE projeto;
 
@@ -32,10 +31,14 @@ REFERENCES usuario(id),
 fk_exercicio INT,
 CONSTRAINT fkpr_exercicio FOREIGN KEY (fk_exercicio)
 REFERENCES exercicio(id),
-data_dia date,
+data_dia DATETIME,
 valor FLOAT,
 CONSTRAINT pk_personalrecord PRIMARY KEY (id, fk_usuario, fk_exercicio)
 );
+
+
+/*INSERT INTO personalrecord (fk_usuario, fk_exercicio, data_dia, valor) VALUES
+	(100, 1, CAST(now()  AS DATE) , 999);*/
 
 INSERT INTO exercicio (tipo, nome) VALUES
 -- Barbell
@@ -109,5 +112,9 @@ INSERT INTO exercicio (tipo, nome) VALUES
 ('Gymnastic', 'Strict Toes-to-bar'),
 ('Gymnastic', 'Toes-to-bar');
 
-SELECT * FROM exercicio;
 SELECT * FROM usuario;
+
+SELECT usuario.nome, exercicio.nome, personalrecord.valor, personalrecord.data_dia
+	FROM personalrecord JOIN usuario
+    ON personalrecord.fk_usuario = usuario.id
+    JOIN exercicio ON exercicio.id = personalrecord.fk_exercicio;

@@ -107,22 +107,22 @@
     var confirmacaoSenhaVar = confirmacao_senha_input.value;
 
 
-    // Verificando se há algum campo errado
-    if (
-      (nomeVar == "") ||
-      (!emailVar.includes('@') && !emailVar.includes('.com')) ||
-      (senhaVar.length <= 6) ||
-      (confirmacaoSenhaVar != senhaVar)
-    ) {
-      cardErro.style.display = "block";
-      mensagem_erro.innerHTML =
-        "Você preencheu algo de errado, tente novamente.";
+    // // Verificando se há algum campo errado
+    // if (
+    //   (nomeVar == "") ||
+    //   (!emailVar.includes('@') && !emailVar.includes('.com')) ||
+    //   (senhaVar.length <= 6) ||
+    //   (confirmacaoSenhaVar != senhaVar)
+    // ) {
+    //   cardErro.style.display = "block";
+    //   mensagem_erro.innerHTML =
+    //     "Você preencheu algo de errado, tente novamente.";
 
-      finalizarAguardar();
-      return false;
-    } else {
-      setInterval(sumirMensagem, 5000);
-    }
+    //   finalizarAguardar();
+    //   return false;
+    // } else {
+    //   setInterval(sumirMensagem, 5000);
+    // }
 
     // Enviando o valor da nova input
     fetch("/usuarios/cadastrar", {

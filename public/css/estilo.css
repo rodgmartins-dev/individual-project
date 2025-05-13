@@ -290,7 +290,8 @@ body {
   flex-direction: column;
 }
 
-input {
+input,
+select {
   margin-bottom: 10px;
   border: 2px solid #32b9cd;
   padding: 10px;

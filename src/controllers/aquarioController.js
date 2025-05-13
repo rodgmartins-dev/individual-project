@@ -18,17 +18,17 @@ function buscarAquariosPorEmpresa(req, res) {
 
 
 function cadastrar(req, res) {
-  var descricao = req.body.descricao;
+  var fk_exercicio = req.body.fk_exercicio;
   var idUsuario = req.body.idUsuario;
 
-  if (descricao == undefined) {
-    res.status(400).send("descricao está undefined!");
+  if (fk_exercicio == undefined) {
+    res.status(400).send("fk_exercicio está undefined!");
   } else if (idUsuario == undefined) {
     res.status(400).send("idUsuario está undefined!");
   } else {
 
 
-    aquarioModel.cadastrar(descricao, idUsuario)
+    aquarioModel.cadastrar(fk_exercicio, data_dia, valor)
       .then((resultado) => {
         res.status(201).json(resultado);
       }
