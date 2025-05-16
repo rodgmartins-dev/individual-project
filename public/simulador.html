@@ -69,10 +69,12 @@
                         </div>
                     </div>
                     <button class="botao" id="btncalcular" onclick="calcular()">calcular</button>
-                    <dialog close id="results">
-                        <div style="background-color: blue; width: 100px; height: 100px;" id="div_modal"></div>
-                        <button id="cancel" type="reset">Cancel</button>
-                    </dialog>
+                    <div class="modal-overlay" id="modal1" role="dialog" aria-modal="true" aria-labelledby="modalTitle"
+                        tabindex="-1">
+                        <div class="modal" id="divmensagem">
+                            <!-- <p id="modalTitle"></p> -->
+                        </div>
+                    </div>
                 </div>
                 <div id="div_aguardar" class="loading-div">
                     <img src="./assets/circle-loading.gif" id="loading-gif">
@@ -94,11 +96,27 @@
 </html>
 
 <script>
-    var cancelButton = document.getElementById("cancel");
-    var resultsModal = document.getElementById("results");
+    const openBtn = document.getElementById('btncalcular');
+    const modal = document.getElementById('modal1');
 
-    cancelButton.addEventListener("click", function () {
-        results.close();
+    function openModal() {
+        modal.classList.add('active');
+        modal.focus();
+    }
+    function closeModal() {
+        modal.classList.remove('active');
+        openBtn.focus();
+    }
+    openBtn.addEventListener('click', calcular);
+    modal.addEventListener('click', e => {
+        if (e.target == modal) {
+            closeModal();
+        }
+    });
+    window.addEventListener('keydown', e => {
+        if (e.key == 'Escape' && modal.classList.contains('active')) {
+            closeModal();
+        }
     });
 
     function calcular() {
@@ -124,15 +142,10 @@
             return;
         }
 
-        var mensagem = "";
-        if (checkEmagrecer) {
-            mensagem = `Seu IMC é ${imc.toFixed(2)}. Você deseja emagrecer. Lembre-se: uma alimentação saudável e exercícios regulares são essenciais!`;
-        } else if (checkGanharMassa) {
-            mensagem = `Seu IMC é ${imc.toFixed(2)}. Você deseja ganhar massa muscular. Foque em treinos de força e dieta rica em proteínas!`;
-        }
+        var mensagem = "testando";
+        divmensagem.innerHTML = mensagem;
 
-        div_modal.innerHTML = `<p style="color: white; padding: 10px;">${mensagem}</p>`;
-        resultsModal.showModal();
+        openModal()
 
     }
 </script>
