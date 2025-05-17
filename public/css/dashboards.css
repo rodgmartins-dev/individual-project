@@ -58,7 +58,7 @@ body {
   font-size: 18px;
   padding: 10px 15px;
   color: white;
-  background-color: #e6005a;
+  background-color: #8E1616;
   width: 120px;
 }
 
@@ -120,7 +120,7 @@ body {
   position: relative;
   top: 0;
   left: 20%;
-  background-color: #161618;
+  background-color: #1D1616;
   height: 100vh;
   overflow: auto;
 }
@@ -236,7 +236,6 @@ body {
   width: 100%;
 }
 
-
 .cards h1 {
   font-size: 22px;
   border-bottom: solid white 1px;
@@ -329,7 +328,7 @@ canvas {
 
 .janela {
   display: flex;
-  /* width: 100vw; */
+  width: 100vw;
 }
 
 .header-left a {
@@ -348,15 +347,15 @@ canvas {
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-  border-right: 3px solid #32b9cd;
-  background-color: #212124;
+  border-right: 3px solid #8E1616;
+  background-color: #1D1616;
 }
 
 .dash-right {
   display: flex;
   width: 70%;
   height: fit-content;
-  background-color: #161618;
+  background-color: #1D1616;
   position: relative;
   top: 0;
   left: 25%;
@@ -365,7 +364,7 @@ canvas {
 }
 
 .header-left h1 {
-  color: #32b9cd;
+  color: #EEEEEE;
 }
 
 .hello {
@@ -375,7 +374,7 @@ canvas {
 }
 
 .hello h3 {
-  color: #e3b062;
+  color: #8E1616;
   font-weight: 300;
   font-size: 1.2rem;
 }
@@ -387,23 +386,40 @@ canvas {
 .btn-nav {
   width: 40%;
   color: white;
-  background-color: #e6005a;
+  background-color: #8E1616;
   border-radius: 5px;
   text-align: center;
   padding: 2% 5%;
+  outline-offset: 2px;
+  outline-color: transparent;
+  outline-style: solid;
+  outline-width: 2px;
 }
+
+.btn-nav:hover,
+.btn-logout:hover {
+  transition: background-color 0.5s;
+  background-color: #D84040;
+  outline-color: #D84040;
+  color: white;
+}
+
+.btn-nav:focus-visible {
+  outline-color: #D84040;
+}
+
 
 .btn-nav-white {
   width: 40%;
-  background-color: white;
-  border: 3px solid #e6005a;
+  background-color: #EEEEEE;
+  border: 3px solid #8E1616;
   border-radius: 5px;
   text-align: center;
   padding: 2% 5%;
 }
 
 .btn-nav-white h3 {
-  color: #e6005a;
+  color: #8E1616;
   padding: 0;
   margin: 0;
 }
@@ -418,8 +434,8 @@ canvas {
   margin: 0;
   padding: 0;
   width: 20%;
-  background-color: #32b9cd;
-  color: white;
+  background-color: #EEEEEE;
+  color: #1D1616;
   border-radius: 10px;
   text-align: center;
   padding: 10px 15px;

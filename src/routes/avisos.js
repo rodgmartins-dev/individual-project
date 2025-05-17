@@ -31,4 +31,12 @@ router.get("/listarExercicio", function (req, res) {
     avisoController.listarExercicio(req, res);
 });
 
+router.get("/listarExercicioUsuarios/:usuario", function (req, res) {
+    avisoController.listarExercicioUsuarios(req, res);
+});
+
+router.get("/obterDadosGrafico/:idExercicio", function (req, res) {
+    avisoController.obterDadosGrafico(req, res);
+});
+
 module.exports = router;

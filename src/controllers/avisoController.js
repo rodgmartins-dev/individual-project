@@ -1,5 +1,7 @@
 var avisoModel = require("../models/avisoModel");
 
+var usuarioLogado = "";
+
 function listar(req, res) {
     avisoModel.listar().then(function (resultado) {
         if (resultado.length > 0) {
@@ -154,6 +156,37 @@ function listarExercicio(req, res) {
     });
 }
 
+function listarExercicioUsuarios(req, res) {
+    var fk_usuario = req.params.usuario;
+    usuarioLogado = fk_usuario;
+    avisoModel.listarExercicioUsuarios(fk_usuario).then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar os avisos: ", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
+function obterDadosGrafico(req, res) {
+    var idExercicio = req.params.idExercicio;
+
+    avisoModel.obterDadosGrafico(usuarioLogado, idExercicio).then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar os avisos: ", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
 
 
 
@@ -161,7 +194,9 @@ function listarExercicio(req, res) {
 module.exports = {
     listar,
     listarPorUsuario,
+    listarExercicioUsuarios,
     listarExercicio,
+    obterDadosGrafico,
     pesquisarDescricao,
     publicar,
     editar,

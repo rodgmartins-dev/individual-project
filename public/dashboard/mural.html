@@ -40,12 +40,12 @@
 
             <div class="btn-nav-white">
                 <a href="./dashboard.html">
-                    <h3>Gráficos</h3>
+                    <h3>Personal Records</h3>
                 </a>
             </div>
 
             <div class="btn-nav">
-                <h3>Mural de Avisos</h3>
+                <h3>Mural de Records</h3>
             </div>
 
             <div class="btn-logout" onclick="limparSessao()">
@@ -55,8 +55,6 @@
         </div>
 
         <div class="dash-right">
-
-
             <div class="avisos">
                 <div id="alerta">
                 </div>
@@ -106,23 +104,15 @@
 </html>
 
 <script>
-
-
-
     document.addEventListener("DOMContentLoaded", function (event) {
 
         var listaRecebida;
 
         listarExercicio();
 
-
         var currentId;
         var currentLabel;
-
-
     });
-
-
 
     function listarExercicio() {
         fetch("/avisos/listarExercicio").then(function (resposta) {
@@ -152,7 +142,6 @@
         })
     }
 
-
     // botao para verificar oque sera enviado para o backend
     // sendo currentId o ID do campo
     // e o currentLabel o texto do campo
@@ -174,10 +163,6 @@
         alert(currentLabel);
     }
 
-
-
-
-
     b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
 
     function limparFormulario() {
@@ -191,7 +176,6 @@
             fk_usuario: idUsuario,
             fk_exercicio: form_postagem.select_teste.value,
             valor: form_postagem.valor.value,
-
         }
 
         fetch(`/avisos/publicar/${idUsuario}`, {
@@ -252,7 +236,6 @@
             console.log(`#ERRO: ${resposta}`);
         });
     }
-
 
     function formatDate(date) {
 
@@ -339,5 +322,4 @@
             finalizarAguardar();
         });
     }
-
 </script>
