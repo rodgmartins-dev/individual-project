@@ -33,12 +33,6 @@
             </div>
 
             <div class="btn-nav-white">
-                <a href="cards.html">
-                    <h3>Aquários</h3>
-                </a>
-            </div>
-
-            <div class="btn-nav-white">
                 <a href="./dashboard.html">
                     <h3>Personal Records</h3>
                 </a>
@@ -56,27 +50,16 @@
 
         <div class="dash-right">
             <div class="avisos">
-                <div id="alerta">
-                </div>
                 <div class="container">
                     <h1>Publicar uma nova marca pessoal</h1>
                     <div class="div-form">
                         <form id="form_postagem" method="post" onsubmit="return publicar()">
-                            <label>
-                                Valor(em kilos):
-                                <br>
-                                <input name="valor" id="valor" maxlength="3"></input>
-                            </label>
-                            <br>
-                            <br>
-                            <button>Enviar</button>
-
-                            <br>
-                            <br>
-
                             <select id="select_teste">
                                 <option selected value="#">Selecione uma opção</option>
                             </select>
+                            <input name="valor" id="valor" maxlength="3"
+                                placeholder="Digite o valor(em kilo ou reps)"></input>
+                            <button>Enviar</button>
 
                         </form>
 
@@ -89,7 +72,7 @@
                         </div>
 
                     </div>
-                    <h1>Mural de Avisos</h1>
+                    <h1>Mural de records gerais</h1>
                     <div class="div-results">
                         <div id="feed_container" class="feed-container">
                         </div>
@@ -107,13 +90,12 @@
     document.addEventListener("DOMContentLoaded", function (event) {
 
         var listaRecebida;
-
         listarExercicio();
 
         var currentId;
         var currentLabel;
     });
-
+    var idUsuario = sessionStorage.ID_USUARIO;
     function listarExercicio() {
         fetch("/avisos/listarExercicio").then(function (resposta) {
             if (resposta.ok) {
@@ -170,8 +152,6 @@
     }
 
     function publicar() {
-        var idUsuario = sessionStorage.ID_USUARIO;
-
         var corpo = {
             fk_usuario: idUsuario,
             fk_exercicio: form_postagem.select_teste.value,
@@ -262,7 +242,6 @@
 
                 resposta.json().then(function (resposta) {
                     console.log("Dados recebidos: ", JSON.stringify(resposta));
-
                     var feed = document.getElementById("feed_container");
                     feed.innerHTML = "";
                     for (let i = 0; i < resposta.length; i++) {
@@ -275,39 +254,42 @@
                         var spanNome = document.createElement("span");
                         var divDescricao = document.createElement("div");
                         var divButtons = document.createElement("div");
-                        var btnEditar = document.createElement("button");
+                        // var btnEditar = document.createElement("button");
                         var btnDeletar = document.createElement("button");
 
 
-                        spanID.innerHTML = "ID: <b>" + publicacao.id + "</b>";
-                        spanTitulo.innerHTML = "Título: <b>" + publicacao.nome + "</b>";
-                        spanNome.innerHTML = "Autor: <b>" + publicacao.tipo + "</b>";
+                        spanID.innerHTML = "Nome Usuário: <b>" + publicacao.usuario + "</b>";
+                        spanTitulo.innerHTML = "Nome do exercício: <b>" + publicacao.nome + "</b>";
+                        spanNome.innerHTML = "Marca conquistada: <b>" + publicacao.valor + "</b>";
                         divDescricao.innerHTML = "Descrição: <b>" + (publicacao.data_dia.split('T')[0]) + "</b>";
-                        btnEditar.innerHTML = "Editar";
+                        // btnEditar.innerHTML = "Editar";
                         btnDeletar.innerHTML = "Deletar";
 
                         divPublicacao.className = "publicacao";
-                        spanTitulo.id = "inputNumero" + publicacao.valor
+                        spanTitulo.id = "inputNumero" + publicacao.nome
                         spanNome.className = "publicacao-nome";
                         spanTitulo.className = "publicacao-titulo";
                         divDescricao.className = "publicacao-descricao";
 
                         divButtons.className = "div-buttons"
 
-                        btnEditar.className = "publicacao-btn-editar"
-                        btnEditar.id = "btnEditar" + publicacao.id;
-                        btnEditar.setAttribute("onclick", `editar(${publicacao.id})`);
+                        // btnEditar.className = "publicacao-btn-editar"
+                        // btnEditar.id = "btnEditar" + publicacao.id;
+                        // btnEditar.setAttribute("onclick", `editar(${publicacao.id})`);
 
                         btnDeletar.className = "publicacao-btn-editar"
                         btnDeletar.id = "btnDeletar" + publicacao.id;
                         btnDeletar.setAttribute("onclick", `deletar(${publicacao.id})`);
+                        if (idUsuario != publicacao.id) {
+                            btnDeletar.style.display = "none";
+                        }
 
                         divPublicacao.appendChild(spanID);
                         divPublicacao.appendChild(spanNome);
                         divPublicacao.appendChild(spanTitulo);
                         divPublicacao.appendChild(divDescricao);
                         divPublicacao.appendChild(divButtons);
-                        divButtons.appendChild(btnEditar);
+                        // divButtons.appendChild(btnEditar);
                         divButtons.appendChild(btnDeletar);
                         feed.appendChild(divPublicacao);
                     }

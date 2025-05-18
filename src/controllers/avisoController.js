@@ -188,9 +188,6 @@ function obterDadosGrafico(req, res) {
     });
 }
 
-
-
-
 module.exports = {
     listar,
     listarPorUsuario,
