@@ -94,10 +94,20 @@ ul {
   color: #EEEEEE;
 }
 
-.banner video {
-  position: absolute;
+.div-video {
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  position: fixed;
   z-index: -1;
 }
+
+/* .banner video {
+  position: absolute;
+  z-index: -1;
+} */
 
 .banner .container {
   justify-content: center;
@@ -399,8 +409,8 @@ input[type=number]::-webkit-inner-spin-button {
   background: #fff;
   padding: 2rem 3rem;
   border-radius: 12px;
-  max-width: 90vw;
-  max-height: 80vh;
+  max-width: 600px;
+  max-height: 970px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
   display: flex;
   align-items: center;

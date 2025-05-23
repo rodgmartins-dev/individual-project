@@ -71,8 +71,8 @@
                     <button class="botao" id="btncalcular" onclick="calcular()">calcular</button>
                     <div class="modal-overlay" id="modal1" role="dialog" aria-modal="true" aria-labelledby="modalTitle"
                         tabindex="-1">
-                        <div class="modal" id="divmensagem">
-                            <!-- <p id="modalTitle"></p> -->
+                        <div class="modal">
+                            <p id="modalTitle"></p>
                         </div>
                     </div>
                 </div>
@@ -99,23 +99,22 @@
     const openBtn = document.getElementById('btncalcular');
     const modal = document.getElementById('modal1');
 
-    function openModal() {
+    openBtn.addEventListener('click', () => {
         modal.classList.add('active');
         modal.focus();
-    }
-    function closeModal() {
-        modal.classList.remove('active');
-        openBtn.focus();
-    }
-    openBtn.addEventListener('click', calcular);
+    });
+
     modal.addEventListener('click', e => {
         if (e.target == modal) {
-            closeModal();
+            modal.classList.remove('active');
+            openBtn.focus();
         }
     });
+
     window.addEventListener('keydown', e => {
         if (e.key == 'Escape' && modal.classList.contains('active')) {
-            closeModal();
+            modal.classList.remove('active');
+            openBtn.focus();
         }
     });
 
@@ -123,7 +122,9 @@
         var peso = Number(input_peso.value);
         var altura = Number(input_altura.value);
         var aguaDia = peso * 0.033;
-        var imc = peso / (altura * altura);
+        var ingestaoCreatina = peso * 0.07
+        var calcProteinEmagrecer = 1.6 * peso;
+        var calcProteinGmassa = 2.2 * peso;
         var checkEmagrecer = emagrecer.checked;
         var checkGanharMassa = ganharMassa.checked;
 
@@ -142,10 +143,19 @@
             return;
         }
 
-        var mensagem = "testando";
-        divmensagem.innerHTML = mensagem;
+        var mensagem = "";
+        if (checkEmagrecer) {
+            mensagem = `
+            Adote um déficit calórico moderado, com ingestão proteica adequada (aprox. ${calcProteinEmagrecer}g/dia) para preservar massa magra.<br><br>Prefira carboidratos de baixo índice glicêmico (ex: aveia, leguminosas, arroz integral entre outros), a hidratação ideal é de ${aguaDia}L/dia e a ingestão de creatina aproximadamente de ${ingestaoCreatina}g/dia.<br><br>Evite processados e foque em densidade nutricional. O CrossFit, aliado ao déficit calórico, favorece rápida redução de gordura corporal.
+            `;
+        } else if (checkGanharMassa) {
+            mensagem = `
+            Priorize uma dieta hipercalórica com proteínas magras (${calcProteinGmassa}g/dia), carboidratos complexos (ex: arroz integral, batata-doce, mandioca, leguminosas) e boas gorduras (ex: nozes e sementes).<br><br>A hidratação ideal é de ${aguaDia}L/dia e a ingestão de creatina aproximadamente de ${ingestaoCreatina}g/dia e beta-alanina potencializam força e hipertrofia.<br><br>Lembre-se que o descanso é essencial e ajuda a promover hipertrofia.
+            `;
+        }
 
-        openModal()
+        modalTitle.innerHTML = mensagem;
+        resultsModal.showModal();
 
     }
 </script>
