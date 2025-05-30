@@ -52,10 +52,6 @@
       <div class="card card-cadastro">
         <h2>Bem-vindo!</h2>
         <div class="formulario">
-          <!--
-                         Para inserir mais um campo, copie uma das inputs abaixo.
-                         Assim que inserir vá para o script abaixo.
-                     -->
           <div class="campo">
             <span>Nome:</span>
             <input id="nome_input" type="text" placeholder="Seu nome completo" />
@@ -108,21 +104,20 @@
 
 
     // // Verificando se há algum campo errado
-    // if (
-    //   (nomeVar == "") ||
-    //   (!emailVar.includes('@') && !emailVar.includes('.com')) ||
-    //   (senhaVar.length <= 6) ||
-    //   (confirmacaoSenhaVar != senhaVar)
-    // ) {
-    //   cardErro.style.display = "block";
-    //   mensagem_erro.innerHTML =
-    //     "Você preencheu algo de errado, tente novamente.";
+    if (
+      (nomeVar == "") ||
+      (!emailVar.includes('@') && !emailVar.includes('.com')) ||
+      (senhaVar.length <= 6) ||
+      (confirmacaoSenhaVar != senhaVar)
+    ) {
 
-    //   finalizarAguardar();
-    //   return false;
-    // } else {
-    //   setInterval(sumirMensagem, 5000);
-    // }
+      cardErro.style.display = "block";
+      mensagem_erro.innerHTML =
+        "Você preencheu algo de errado, tente novamente.";
+
+      finalizarAguardar();
+      return false;
+    }
 
     // Enviando o valor da nova input
     fetch("/usuarios/cadastrar", {

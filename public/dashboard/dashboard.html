@@ -2,12 +2,11 @@
 <html lang="pt-br">
 
 <head>
-    <link rel="shortcut icon" href="../assets/icon/favicon2.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="..\assets\imgs\Crossfit-removebg.png" type="image/x-icon">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AquaTech | Dashboards</title>
-
+    <title>Crossfit | Personal records</title>
 
     <link rel="stylesheet" href="./../css/dashboards.css">
     <link rel="stylesheet" href="./../css/estilo.css" />
@@ -19,14 +18,10 @@
         href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
         rel="stylesheet">
 
-    <!-- scripts do Chart.js - 2022-1 -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://kit.fontawesome.com/fe8962710f.js" crossorigin="anonymous"></script>
 
-    <!--FONT AWESOME-->
 </head>
-
-<!-- <body onload=" atualizarFeed()"> -->
 
 <body>
     <div class="header-left">
@@ -67,7 +62,7 @@
                 <p id="qtde_pr" class="kpi-value" aria-live="polite">0x</p>
             </article>
             <article class="kpi-card" tabindex="0">
-                <h2 class="kpi-title">Satisfação
+                <h2 class="kpi-title">Progresso (base/resultado anterior)
                     <i class="fa-regular fa-star"></i>
                 </h2>
                 <p id="progresso" class="kpi-value" aria-live="polite">0%
@@ -89,16 +84,10 @@
 
 
 <script>
-
-
     b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
 
-    let proximaAtualizacao;
-
-    // window.onload = exibirAquariosDoUsuario();
-
     var idUsuario = sessionStorage.ID_USUARIO;
-    idUsuario = parseInt(idUsuario)
+    // idUsuario = parseInt(idUsuario)
 
     listarExercicioUsuarios(idUsuario);
 
@@ -108,19 +97,7 @@
     let graficoChart = null;
 
     var listaUsuarioExercico
-
-    const tabela = document.getElementById('tabelaPorcentagem').querySelector('tbody');
-
-    for (let i = 105; i >= 0; i -= 5) {
-        const linha = document.createElement('tr');
-        const celula = document.createElement('td');
-        celula.textContent = `${i}%`;
-        linha.appendChild(celula);
-        tabela.appendChild(linha);
-    }
-
     function listarExercicioUsuarios(usuario) {
-
         fetch(`/avisos/listarExercicioUsuarios/${usuario}`).then(function (resposta) {
             if (resposta.ok) {
                 if (resposta.status == 204) {
@@ -146,7 +123,7 @@
 
     function obterDadosGrafico() {
         var idExercicio = document.getElementById("select_exercicio").value;
-        idExercicio = parseInt(idExercicio);
+        idExercicio = Number(idExercicio);
 
         fetch(`/avisos/obterDadosGrafico/${idExercicio}`).then(function (response) {
             if (response.ok) {
@@ -167,36 +144,45 @@
     }
 
     function atualizarCards(resposta) {
-
+        /*
         const valores = resposta.map(item => item.valor);
-
-        // TO DO ARRUMAR
+        Pelo que entendi, o .map() retorna um novo array com os elementos que foram passadaos para ele, facilitando a iteração com os elementos.
         const menorValor = Math.min(...valores);
         const maiorValor = Math.max(...valores);
-        // TO DO ARRUMAR
+        Spread(...) serve para espalhar os elementos do array onde zero ou mais resultados são esperados.
+        */
+        var maiorValor = resposta[0].valor;
+        var menorValor = resposta[0].valor;
+        var valores = 0;
+        var listaValores = [];
 
+        for (var i = 0; i < resposta.length; i++) {
+            valores = resposta[i].valor
+            listaValores.push(resposta[i].valor)
 
+            if (valores < menorValor) {
+                menorValor = valores;
+            }
+            if (valores > maiorValor) {
+                maiorValor = valores;
+            }
+        }
 
-        const qtdeLista = valores.length;
-
-        const baseDeCalculo = valores[valores.length - 2];
-        const ultimoResultado = valores[valores.length - 1];
-
+        const qtdeLista = resposta.length;
+        const baseDeCalculo = listaValores[listaValores.length - 2];
+        const ultimoResultado = listaValores[listaValores.length - 1];
         const percentual = (ultimoResultado * 100 / baseDeCalculo) - 100
 
         document.getElementById("min_value").innerHTML = menorValor + " KG";
         document.getElementById("max_value").innerHTML = maiorValor + " KG";
         document.getElementById("qtde_pr").innerHTML = qtdeLista + "x";
-        document.getElementById("progresso").innerHTML = percentual.toFixed(2) + "%";
-
-
-
-
-
+        if (resposta.length <= 1) {
+            document.getElementById("progresso").innerHTML = 'Voce possui apenas 1 marca.'
+        } else {
+            document.getElementById("progresso").innerHTML = percentual.toFixed(2) + "%";
+        }
         console.log("Menor valor:", menorValor);
         console.log("Maior valor:", maiorValor);
-
-
     }
 
     function plotarGrafico(resposta) {
@@ -255,6 +241,4 @@
             }
         });
     }
-
-
 </script>

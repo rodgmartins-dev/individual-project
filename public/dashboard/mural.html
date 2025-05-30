@@ -2,11 +2,11 @@
 <html lang="pt-br">
 
 <head>
-    <link rel="shortcut icon" href="../assets/icon/favicon2.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="..\assets\imgs\Crossfit-removebg.png" type="image/x-icon">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AquaTech | Avisos</title>
+    <title>Crossfit | Mural Performance</title>
 
     <link rel="stylesheet" href="./../css/dashboards.css">
     <link rel="stylesheet" href="./../css/estilo.css" />
@@ -26,7 +26,7 @@
 
         <div class="header-left">
 
-            <h1>AquaTech</h1>
+            <h1>Mural de Performance</h1>
 
             <div class="hello">
                 <h3>Olá, <span id="b_usuario">usuário</span>!</h3>
@@ -60,17 +60,11 @@
                             <input name="valor" id="valor" maxlength="3"
                                 placeholder="Digite o valor(em kilo ou reps)"></input>
                             <button>Enviar</button>
-
                         </form>
-
                         <br>
-
-
-
                         <div class="btn-logout" onclick="presubmit()">
                             <h3>teste</h3>
                         </div>
-
                     </div>
                     <h1>Mural de records gerais</h1>
                     <div class="div-results">
@@ -87,15 +81,15 @@
 </html>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function (event) {
+    var idUsuario = sessionStorage.ID_USUARIO;
+    b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
 
+    document.addEventListener("DOMContentLoaded", function (event) {
         var listaRecebida;
         listarExercicio();
-
         var currentId;
         var currentLabel;
     });
-    var idUsuario = sessionStorage.ID_USUARIO;
     function listarExercicio() {
         fetch("/avisos/listarExercicio").then(function (resposta) {
             if (resposta.ok) {
@@ -108,7 +102,6 @@
                 resposta.json().then(function (resposta) {
                     console.log("Dados recebidos: ", JSON.stringify(resposta));
                     listaRecebida = (resposta);
-
                     const select = document.getElementById('select_teste');
                     listaRecebida.forEach(item => {
                         const option = document.createElement('option');
@@ -116,7 +109,6 @@
                         option.textContent = item.Nome;
                         select.appendChild(option);
                     });
-
                 });
             }
         })
@@ -129,8 +121,6 @@
         alert(currentId);
         alert(currentLabel);
     }
-
-    b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
 
     function limparFormulario() {
         document.getElementById("form_postagem").reset();
@@ -235,8 +225,8 @@
 
                         spanID.innerHTML = "Nome Usuário: <b>" + publicacao.usuario + "</b>";
                         spanTitulo.innerHTML = "Nome do exercício: <b>" + publicacao.nome + "</b>";
-                        spanNome.innerHTML = "Marca conquistada: <b>" + publicacao.valor + "</b>";
-                        divDescricao.innerHTML = "Descrição: <b>" + (publicacao.data_dia.split('T')[0]) + "</b>";
+                        spanNome.innerHTML = "Marca conquistada: <b>" + publicacao.valor + " Kg" + "</b>";
+                        divDescricao.innerHTML = "Data do resgistro: <b>" + (publicacao.data_dia.split('T')[0]) + "</b>";
                         btnDeletar.innerHTML = "Deletar";
 
                         divPublicacao.className = "publicacao";

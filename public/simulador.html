@@ -99,10 +99,7 @@
     const openBtn = document.getElementById('btncalcular');
     const modal = document.getElementById('modal1');
 
-    openBtn.addEventListener('click', () => {
-        modal.classList.add('active');
-        modal.focus();
-    });
+    openBtn.addEventListener('click', calcular);
 
     modal.addEventListener('click', e => {
         if (e.target == modal) {
@@ -146,16 +143,16 @@
         var mensagem = "";
         if (checkEmagrecer) {
             mensagem = `
-            Adote um déficit calórico moderado, com ingestão proteica adequada (aprox. ${calcProteinEmagrecer}g/dia) para preservar massa magra.<br><br>Prefira carboidratos de baixo índice glicêmico (ex: aveia, leguminosas, arroz integral entre outros), a hidratação ideal é de ${aguaDia}L/dia e a ingestão de creatina aproximadamente de ${ingestaoCreatina}g/dia.<br><br>Evite processados e foque em densidade nutricional. O CrossFit, aliado ao déficit calórico, favorece rápida redução de gordura corporal.
+            Adote um déficit calórico moderado, com ingestão proteica adequada (aprox. ${parseInt(calcProteinEmagrecer)}g/dia) para preservar massa magra.<br><br>Prefira carboidratos de baixo índice glicêmico (ex: aveia, leguminosas, arroz integral entre outros), a hidratação ideal é de ${aguaDia.toFixed(1)}L/dia e a ingestão de creatina aproximadamente de ${parseInt(ingestaoCreatina)}g/dia.<br><br>Evite processados e foque em densidade nutricional. O CrossFit, aliado ao déficit calórico, favorece rápida redução de gordura corporal.
             `;
         } else if (checkGanharMassa) {
             mensagem = `
-            Priorize uma dieta hipercalórica com proteínas magras (${calcProteinGmassa}g/dia), carboidratos complexos (ex: arroz integral, batata-doce, mandioca, leguminosas) e boas gorduras (ex: nozes e sementes).<br><br>A hidratação ideal é de ${aguaDia}L/dia e a ingestão de creatina aproximadamente de ${ingestaoCreatina}g/dia e beta-alanina potencializam força e hipertrofia.<br><br>Lembre-se que o descanso é essencial e ajuda a promover hipertrofia.
+            Priorize uma dieta hipercalórica com proteínas magras (${parseInt(calcProteinGmassa)}g/dia), carboidratos complexos (ex: arroz integral, batata-doce, mandioca, leguminosas) e boas gorduras (ex: nozes e sementes).<br><br>A hidratação ideal é de ${aguaDia.toFixed(1)}L/dia e a ingestão de creatina aproximadamente de ${parseInt(ingestaoCreatina)}g/dia e beta-alanina potencializam força e hipertrofia.<br><br>Lembre-se que o descanso é essencial e ajuda a promover hipertrofia.
             `;
         }
-
         modalTitle.innerHTML = mensagem;
-        resultsModal.showModal();
-
+        modal.classList.add('active');
+        modal.focus();
     }
+
 </script>
