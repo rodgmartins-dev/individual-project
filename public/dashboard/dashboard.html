@@ -101,22 +101,21 @@
         fetch(`/avisos/listarExercicioUsuarios/${usuario}`).then(function (resposta) {
             if (resposta.ok) {
                 if (resposta.status == 204) {
-                    mensagem.innerHTML = "Nenhum resultado encontrado."
-                    feed.appendChild(mensagem);
-                    throw "Nenhum resultado encontrado!!";
+                    console.log("Nenhum resultado encontrado.")
                 }
-
-                resposta.json().then(function (resposta) {
-                    console.log("Dados recebidos: ", JSON.stringify(resposta));
-                    listaUsuarioExercico = (resposta);
-                    const select = document.getElementById('select_exercicio');
-                    listaUsuarioExercico.forEach(item => {
-                        const option = document.createElement('option');
-                        option.value = item.Id;
-                        option.textContent = item.Nome;
-                        select.appendChild(option);
+                else {
+                    resposta.json().then(function (resposta) {
+                        console.log("Dados recebidos: ", JSON.stringify(resposta));
+                        listaUsuarioExercico = (resposta);
+                        const select = document.getElementById('select_exercicio');
+                        listaUsuarioExercico.forEach(item => {
+                            const option = document.createElement('option');
+                            option.value = item.Id;
+                            option.textContent = item.Nome;
+                            select.appendChild(option);
+                        });
                     });
-                });
+                }
             }
         })
     }
