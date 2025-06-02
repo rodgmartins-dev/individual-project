@@ -496,6 +496,7 @@ body {
   margin-top: 0.5rem;
   display: flex;
   justify-content: center;
+  align-items: baseline;
 }
 
 /* Area gráfico */

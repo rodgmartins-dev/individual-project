@@ -218,7 +218,6 @@ ul {
 .flip-card-back {
   background: linear-gradient(135deg, #1D1616, #434343);
   transform: rotateY(180deg);
-  overflow-y: auto;
   font-size: 0.9rem;
   line-height: 1.4;
   text-align: center;

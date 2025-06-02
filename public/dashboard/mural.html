@@ -51,22 +51,22 @@
         <div class="dash-right">
             <div class="avisos">
                 <div class="container">
-                    <h1>Publicar uma nova marca pessoal</h1>
+                    <h1>Publique uma nova marca pessoal abaixo</h1>
                     <div class="div-form">
                         <form id="form_postagem" method="post" onsubmit="return publicar()">
                             <select id="select_teste">
                                 <option selected value="#">Selecione uma opção</option>
                             </select>
                             <input name="valor" id="valor" maxlength="3"
-                                placeholder="Digite o valor(em kilo ou reps)"></input>
+                                placeholder="Digite o valor em quilos. (Ex: 120)"></input>
                             <button>Enviar</button>
                         </form>
                         <br>
-                        <div class="btn-logout" onclick="presubmit()">
+                        <!-- <div class="btn-logout" onclick="presubmit()">
                             <h3>teste</h3>
-                        </div>
+                        </div> -->
                     </div>
-                    <h1>Mural de records gerais</h1>
+                    <h1>Veja seu resultado no mural de recordes gerais da turma</h1>
                     <div class="div-results">
                         <div id="feed_container" class="feed-container">
                         </div>
@@ -105,8 +105,8 @@
                     const select = document.getElementById('select_teste');
                     listaRecebida.forEach(item => {
                         const option = document.createElement('option');
-                        option.value = item.Id;
-                        option.textContent = item.Nome;
+                        option.value = item.id;
+                        option.textContent = item.nome;
                         select.appendChild(option);
                     });
                 });
@@ -114,13 +114,13 @@
         })
     }
 
-    function presubmit() {
-        currentId = document.getElementById("select_teste").value;
-        var selecionado = document.getElementById("select_teste");
-        currentLabel = selecionado.options[selecionado.selectedIndex].text;
-        alert(currentId);
-        alert(currentLabel);
-    }
+    // function presubmit() {
+    //     currentId = document.getElementById("select_teste").value;
+    //     var selecionado = document.getElementById("select_teste");
+    //     currentLabel = selecionado.options[selecionado.selectedIndex].text;
+    //     alert(currentId);
+    //     alert(currentLabel);
+    // }
 
     function limparFormulario() {
         document.getElementById("form_postagem").reset();

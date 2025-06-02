@@ -44,6 +44,7 @@
     </div>
     <div class="dash">
         <div class="filter-select-container">
+            <h3>Escolha o exercício que deseja ver seus resultados</h3>
             <select id="select_exercicio" onchange="obterDadosGrafico()">
                 <option selected value="#">Selecione uma opção</option>
             </select>
@@ -87,12 +88,8 @@
     b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
 
     var idUsuario = sessionStorage.ID_USUARIO;
-    // idUsuario = parseInt(idUsuario)
 
     listarExercicioUsuarios(idUsuario);
-
-    var maisAEsquerda;
-    var maisADireita;
 
     let graficoChart = null;
 
@@ -110,8 +107,8 @@
                         const select = document.getElementById('select_exercicio');
                         listaUsuarioExercico.forEach(item => {
                             const option = document.createElement('option');
-                            option.value = item.Id;
-                            option.textContent = item.Nome;
+                            option.value = item.id;
+                            option.textContent = item.nome;
                             select.appendChild(option);
                         });
                     });
@@ -143,13 +140,6 @@
     }
 
     function atualizarCards(resposta) {
-        /*
-        const valores = resposta.map(item => item.valor);
-        Pelo que entendi, o .map() retorna um novo array com os elementos que foram passadaos para ele, facilitando a iteração com os elementos.
-        const menorValor = Math.min(...valores);
-        const maiorValor = Math.max(...valores);
-        Spread(...) serve para espalhar os elementos do array onde zero ou mais resultados são esperados.
-        */
         var maiorValor = resposta[0].valor;
         var menorValor = resposta[0].valor;
         var valores = 0;
@@ -193,11 +183,27 @@
         });
 
         const labels = Object.keys(agrupado);
-        const valores = labels.map(data => agrupado[data]);
+        // const valores = labels.map(data => agrupado[data]);
+
+        // var labels = [];
+        // for (var chave in agrupado) {
+        //     if (agrupado.hasOwnProperty(chave)) {
+        //         labels.push(chave);
+        //     }
+        // }
+
+        var valores = [];
+        for (var i = 0; i < labels.length; i++) {
+            var data = labels[i];
+            var valor = agrupado[data];
+            valores.push(valor);
+        }
+
+
 
         const ctx = document.getElementById('grafico').getContext('2d');
 
-        if (graficoChart !== null) {
+        if (graficoChart != null) {
             graficoChart.destroy();
         }
 
@@ -221,6 +227,14 @@
                 responsive: true,
                 maintainAspectRatio: false,
                 usePointStyle: true,
+
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'GRÁFICO DE PERFORMANCE INDIVIDUAL',
+                        position: 'top'
+                    },
+                },
 
                 scales: {
                     x: {

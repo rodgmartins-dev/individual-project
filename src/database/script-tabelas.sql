@@ -1,10 +1,5 @@
--- Arquivo de apoio, caso você queira criar tabelas como as aqui criadas para a API funcionar.
--- Você precisa executar os comandos no banco de dados para criar as tabelas,
--- ter este arquivo aqui não significa que a tabela em seu BD estará como abaixo!
+-- Comandos para MySQL Server
 
-/*
-comandos para mysql server
-*/
 CREATE DATABASE projeto;
 USE projeto;
 
@@ -12,9 +7,7 @@ CREATE TABLE usuario (
 id INT PRIMARY KEY AUTO_INCREMENT,
 nome VARCHAR(100),
 email VARCHAR(45),
-senha VARCHAR(45),
-cep CHAR(8),
-complemento VARCHAR(45)
+senha VARCHAR(45)
 )AUTO_INCREMENT = 100;
 
 CREATE TABLE exercicio (
@@ -112,9 +105,55 @@ INSERT INTO exercicio (tipo, nome) VALUES
 ('Gymnastic', 'Strict Toes-to-bar'),
 ('Gymnastic', 'Toes-to-bar');
 
+
+INSERT INTO usuario (nome, email, senha) VALUES ('Rodrigo', 'vini1@csgo.com', '1234567');
+
+INSERT INTO personalrecord VALUES
+(default, 105, 1, '2025-05-29', 90),
+(default, 105, 1, '2025-05-28', 80),
+(default, 105, 1, '2025-05-27', 70),
+(default, 105, 1, '2025-05-25', 60);
+
+/*
+SELECT * FROM personalrecord;
 SELECT * FROM usuario;
+
+SELECT id, nome FROM exercicio ORDER BY id;
 
 SELECT usuario.nome, exercicio.nome, personalrecord.valor, personalrecord.data_dia
 	FROM personalrecord JOIN usuario
     ON personalrecord.fk_usuario = usuario.id
     JOIN exercicio ON exercicio.id = personalrecord.fk_exercicio;
+    
+SELECT usuario.id, usuario.nome AS Usuario, exercicio.nome, pr.data_dia, pr.valor
+	    FROM exercicio
+        JOIN personalrecord pr ON exercicio.id = pr.fk_exercicio
+        JOIN usuario ON pr.fk_usuario = usuario.id
+        ORDER BY exercicio.nome;
+    
+SELECT usuario.id, usuario.nome AS usuario, exercicio.nome, pr.id AS idPost, pr.data_dia, pr.valor
+	    FROM exercicio
+        JOIN personalrecord pr ON exercicio.id = pr.fk_exercicio
+        JOIN usuario ON pr.fk_usuario = usuario.id
+        ORDER BY exercicio.nome;
+        
+SELECT usuario.id, usuario.nome AS usuario, exercicio.nome, pr.id AS idPost, pr.data_dia, pr.valor
+	    FROM exercicio
+        JOIN personalrecord pr ON exercicio.id = pr.fk_exercicio
+        JOIN usuario ON pr.fk_usuario = usuario.id
+        ORDER BY exercicio.nome AND valor;        
+        
+        
+SELECT * FROM exercicio ex INNER JOIN personalrecord pr
+	ON ex.id = pr.fk_exercicio
+	WHERE pr.fk_exercicio = 6 and pr.fk_usuario = 100
+	ORDER BY data_dia;
+
+set @valorMIN  =  (select VALOR FROM PersonalRecord where fk_exercicio = 6 AND fk_usuario = 100 order by Data_dia desc LIMIT 1 );
+set @valorMAX  =  (select  valor  FROM PersonalRecord where fk_exercicio = 6 AND fk_usuario = 100 order by Data_dia ASC LIMIT 1 );
+
+SELECT pr.fk_exercicio AS id_Exercicio, min(pr.valor) as MIN_VALOR, MAX(pr.valor) AS MAX_VALOR, COUNT(pr.fk_exercicio) AS QTDE_PR, (@valorMIN - @valorMAX) /100  AS prog FROM exercicio ex INNER JOIN personalrecord pr
+	ON ex.id = pr.fk_exercicio
+	WHERE  pr.fk_exercicio = 6 AND pr.fk_usuario = 100
+	GROUP BY pr.fk_exercicio;
+*/
